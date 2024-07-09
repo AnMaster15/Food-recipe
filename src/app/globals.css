@@ -25,6 +25,32 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+.navbar-container {
+  position: relative;
+  padding: 2px; /* Adjust the width of the border here */
+  border-radius: 26px; /* Adjust the border-radius */
+}
+
+.navbar-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(238,0,153,1) 0%, rgba(221,0,238,1) 35%, rgba(0,140,255,1) 100%);
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.navbar-content {
+  position: relative;
+  background: white; /* Adjust based on your navbar background */
+  border-radius: inherit;
+  z-index: 2;
+}
+
+
 
 @layer utilities {
   .text-balance {
