@@ -61,9 +61,10 @@ const RecipeDetails = () => {
       script.async = true;
       document.body.appendChild(script);
     }
-
-    window.googleTranslateElementInit = () => {
+  
+    (window as any).googleTranslateElementInit = () => {
       if (!document.querySelector('.goog-te-gadget')) {
+        const google = (window as any).google;
         new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_element');
       }
     };
@@ -105,8 +106,8 @@ const RecipeDetails = () => {
 
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
-    const ingredient = recipe[`strIngredient${i}`];
-    const measure = recipe[`strMeasure${i}`];
+    const ingredient = recipe[`strIngredient${i}` as keyof typeof recipe];
+    const measure = recipe[`strMeasure${i}` as keyof typeof recipe];
     if (ingredient) {
       ingredients.push(`${measure} ${ingredient}`);
     }
