@@ -47,7 +47,7 @@ export function BentoGridDemo() {
     },
   ];
 
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category: any) => {
     router.push(`/category/${category.apiCategory}`);
   };
 
