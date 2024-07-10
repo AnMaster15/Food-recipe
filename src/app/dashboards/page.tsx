@@ -97,8 +97,10 @@ const Dashboard = () => {
   const handleRecipeDelete = async (recipeId: string) => {
     try {
       const db = firebase.firestore();
-      await db.collection('users').doc(user.uid).collection('likedRecipes').doc(recipeId).delete();
-      setLikedRecipes((prevState) => prevState.filter((recipe) => recipe.id !== recipeId));
+      if (user) {
+        await db.collection('users').doc(user.uid).collection('likedRecipes').doc(recipeId).delete();
+        setLikedRecipes((prevState) => prevState.filter((recipe) => recipe.id !== recipeId));
+      }
     } catch (error) {
       console.error('Error deleting recipe:', error);
     }
