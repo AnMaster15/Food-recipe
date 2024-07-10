@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "../../components/ui/3d-card";
 import Link from "next/link";
+import router from "next/router";
 
 const categories = [
   {
@@ -121,19 +122,16 @@ const categories = [
     imageUrl: "/images/malaysian.jpeg", // Ensure the path is correct
     link: "/category/Malaysian",
   },
-  
   {
     title: "Mexican",
     imageUrl: "/images/mexican.jpeg", // Ensure the path is correct
     link: "/category/Mexican",
   },
-  
   {
     title: "Moroccan",
     imageUrl: "/images/moroccan.jpeg", // Ensure the path is correct
     link: "/category/Moroccan",
   },
-  
   {
     title: "Polish",
     imageUrl: "/images/polish.jpeg", // Ensure the path is correct
@@ -149,7 +147,6 @@ const categories = [
     imageUrl: "/images/russian.jpeg", // Ensure the path is correct
     link: "/category/Russian",
   },
-
   {
     title: "Spanish",
     imageUrl: "/images/spanish.jpeg", // Ensure the path is correct
@@ -160,7 +157,6 @@ const categories = [
     imageUrl: "/images/thai.jpeg", // Ensure the path is correct
     link: "/category/Thai",
   },
- 
   {
     title: "Turkish",
     imageUrl: "/images/turkish.jpeg", // Ensure the path is correct
@@ -183,26 +179,23 @@ const categories = [
   },
 ];
 
-
-
 const Topics: React.FC = () => {
-   
   return (
     <div className="min-h-screen bg-black py-12 pt-10">
-        <button onClick={() => router.push('/')} className="relative group left-5">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg opacity-75 transition duration-200 group-hover:opacity-100" />
-          <div className="relative px-8 py-2 bg-slate-700 rounded-lg text-white transition duration-200 group-hover:bg-transparent">
-            Back to Home
-          </div>
-        </button>
-    <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">All Categories</h1>  
+      <button onClick={() => router.push('/')} className="relative group left-5">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg opacity-75 transition duration-200 group-hover:opacity-100" />
+        <div className="relative px-8 py-2 bg-slate-700 rounded-lg text-white transition duration-200 group-hover:bg-transparent">
+          Back to Home
+        </div>
+      </button>
+      <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">All Categories</h1>  
       <div className="flex flex-wrap justify-center">
         {categories.map((category, index) => (
-          <CardContainer className="inter-var m-4">
+          <CardContainer key={index} className="inter-var m-4">
             <CardBody className=" relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] bg-slate-700 border-white/[0.2] w-auto h-auto rounded-xl p-6 border">
               <CardItem
                 translateZ="50"
-                className="text-xl font-bold  text-white"
+                className="text-xl font-bold text-white"
               >
                 {category.title}
               </CardItem>
