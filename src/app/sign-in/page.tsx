@@ -82,7 +82,7 @@ const SignIn = () => {
         </button>
         <div className="mt-4 flex justify-between items-center text-white p-2">
   <Link href="/sign-up" className="text-blue-500 hover:underline text-sm mr-4">
-    Don't have an account? Sign Up
+    Don&apos;t have an account? Sign Up
   </Link>
   <Link href="/forgot-password" className="text-blue-500 hover:underline text-sm">
     Forgot Password?
