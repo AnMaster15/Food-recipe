@@ -37,7 +37,7 @@ const CARDS = [
     designation: "Nutrition Expert",
     content: (
       <p>
-        The recipes on FoodMy are exceptional, <Highlight>I'm inspired</Highlight> by their creativity and nutritional balance.
+        The recipes on FoodMy are exceptional, <Highlight>I&apos;m inspired</Highlight> by their creativity and nutritional balance.
       </p>
     ),
   },
@@ -57,7 +57,7 @@ const CARDS = [
     designation: "Culinary Artist",
     content: (
       <p>
-        FoodMy's approach to <Highlight>innovative cooking techniques</Highlight> has revolutionized how I prepare meals.
+        FoodMy&apos;s approach to <Highlight>innovative cooking techniques</Highlight> has revolutionized how I prepare meals.
       </p>
     ),
   },
