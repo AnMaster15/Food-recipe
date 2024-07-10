@@ -41,7 +41,7 @@ const instructors = [
         <WavyBackground className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center h-full">
             <h2 className="text-2xl md:text-4xl lg:text-7xl text-white font-bold text-center mb-8">Meet Our Team</h2>
             <p className="text-base md:text-m text-white text-center mb-4">Our team is made up of passionate foodies, experienced chefs, and dedicated nutrition experts. We work tirelessly to bring you the best recipes and the most accurate nutritional information, so you can enjoy delicious meals that are good for you.</p>
-            <p className="text-base md:text-m text-white text-center mb-4">We are always here to help you on your culinary journey, whether you're looking for a quick weeknight dinner idea, planning a special meal, or simply trying to eat healthier. Join us and discover the joy of cooking and eating well!</p>
+            <p className="text-base md:text-m text-white text-center mb-4">We are always here to help you on your culinary journey, whether you&apos;re looking for a quick weeknight dinner idea, planning a special meal, or simply trying to eat healthier. Join us and discover the joy of cooking and eating well!</p>
             <div className="flex flex-row items-center justify-center mb-10 w-full">
                 <AnimatedTooltip items={instructors} />
             </div>
