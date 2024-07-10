@@ -8,12 +8,12 @@ import Image from "next/image";
 
 const RecipesByCategory = () => {
   const { category } = useParams();
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchRecipes = async (url) => {
+    const fetchRecipes = async (url: string) => {
       const response = await fetch(url);
       const data = await response.json();
       return data.meals || [];
