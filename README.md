@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## FoodMy — Food Recipe & Nutrition (AI)
 
-## Getting Started
+### Live Demo
+- Visit the deployed app: `https://food-recipe-gules.vercel.app`
 
-First, run the development server:
+### Overview
+FoodMy is a modern recipe discovery app that combines AI-powered assistance with practical cooking tools. Users can search recipes by ingredients in their pantry, browse by categories and cuisines, view step-by-step instructions, estimate nutrition per serving, save favorites, and use a multi-timer while cooking. An integrated Gemini AI chatbot answers questions about recipes, cooking, and nutrition.
 
+### Features
+- **Pantry to Recipe search**: Enter one or more ingredients to find matching recipes using TheMealDB. Results are merged/ranked across ingredients and hydrated with details for richer previews.
+- **Recipe discovery & categories**: Explore curated sections and browse by cuisine and dietary preferences.
+- **Recipe details**: Ingredients, instructions, image, like/save, and an adjustable per‑serving nutrition estimate computed from parsed ingredients and measures.
+- **AI chatbot (Gemini)**: Real-time Q&A for recipes, cooking tips, and nutrition with Markdown rendering.
+- **User dashboard & favorites**: Firebase Auth + Firestore to persist liked recipes and manage user profile details.
+- **Recipe Timer**: Create multiple timers with audio and browser notifications.
+- **Create/Submit recipe**: EmailJS form to submit your own recipes for review.
+- **Polished UI**: Next.js App Router, Tailwind CSS, and custom 3D card interactions for engaging visuals.
+
+### Tech Stack
+- **Framework**: Next.js 14 (App Router), TypeScript, React 18
+- **Styling**: Tailwind CSS
+- **Backend-as-a-Service**: Firebase Authentication, Firestore
+- **AI**: Google Generative Language API (Gemini)
+- **Data Source**: TheMealDB public API
+- **Utilities**: EmailJS, React Markdown
+
+### Getting Started
+#### Prerequisites
+- Node.js LTS (v18+)
+- pnpm, npm, or yarn
+
+#### 1) Clone and install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-fork-or-repo-url>
+cd Food-recipe
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2) Environment variables
+Create a `.env.local` file in the project root with the following keys. Values should come from your Firebase project and Google AI Studio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Firebase (used in src/config.ts)
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=...
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# Google Generative Language API (Gemini)
+# Note: key name intentionally matches code usage (double Y)
+NEXT_PUBLIC_GOOGLE_AI_STUDIO_API_KEYY=...
+```
 
-## Learn More
+TheMealDB is a public API and does not require a key for the endpoints used here.
 
-To learn more about Next.js, take a look at the following resources:
+#### 3) Run the app
+```bash
+npm run dev
+# open http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Scripts
+- `dev`: start the local development server
+- `build`: production build
+- `start`: run the production server
+- `lint`: run linting checks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Notable Implementation Details
+- **Ingredient search**: multi‑ingredient intersection with fallback ranking; details hydration for top results.
+- **Nutrition estimates**: derived from a small per‑100g database and unit parsing; recalculates per serving.
+- **Favorites**: likes stored under each user in Firestore and rendered on the dashboard.
+- **AI assistant**: prompts Gemini for domain‑scoped Q&A and renders Markdown responses.
+- **Accessibility/performance**: optimized images with custom loader; responsive layouts; keyboard-friendly inputs.
 
-## Deploy on Vercel
+### Project Structure (high level)
+- `src/app` — Next.js routes (home, recipes, categories, chatbot, dashboards)
+- `src/components` — UI components (cards, search, timer, builder, etc.)
+- `src/context` — auth provider
+- `src/utils` — nutrition estimation utilities
+- `src/types` — TypeScript types
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Deployment
+Deployed on Vercel. Configure environment variables in your Vercel project and connect the repository; push to main to trigger builds.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Acknowledgments
+- Recipes provided by TheMealDB
+- Gemini by Google AI for the chatbot
+
+---
+Made with ❤️ for food lovers.
