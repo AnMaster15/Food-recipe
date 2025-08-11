@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 export const ImagesSlider = ({
   images,
@@ -24,23 +24,19 @@ export const ImagesSlider = ({
   const [loading, setLoading] = useState(false);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex + 1 === images.length ? 0 : prevIndex + 1
     );
-  };
+  }, [images.length]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
     );
-  };
+  }, [images.length]);
 
-  useEffect(() => {
-    loadImages();
-  }, []);
-
-  const loadImages = () => {
+  const loadImages = useCallback(() => {
     setLoading(true);
     const loadPromises = images.map((image) => {
       return new Promise((resolve, reject) => {
@@ -57,7 +53,12 @@ export const ImagesSlider = ({
         setLoading(false);
       })
       .catch((error) => console.error("Failed to load images", error));
-  };
+  }, [images]);
+
+  useEffect(() => {
+    loadImages();
+  }, [loadImages]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
@@ -81,7 +82,7 @@ export const ImagesSlider = ({
       window.removeEventListener("keydown", handleKeyDown);
       clearInterval(interval);
     };
-  }, []);
+  }, [autoplay, handleNext, handlePrevious]);
 
   const slideVariants = {
     initial: {
@@ -115,24 +116,25 @@ export const ImagesSlider = ({
   };
 
   const areImagesLoaded = loadedImages.length > 0;
+  
+  console.log("ImagesSlider render:", { 
+    imagesCount: images.length, 
+    loadedCount: loadedImages.length, 
+    currentIndex, 
+    areImagesLoaded 
+  });
 
   return (
     <div
       className={cn(
-        "overflow-hidden h-full w-full relative flex items-center justify-center",
+        "relative w-full h-full overflow-hidden",
         className
       )}
       style={{
         perspective: "1000px",
       }}
     >
-      {areImagesLoaded && children}
-      {areImagesLoaded && overlay && (
-        <div
-          className={cn("absolute inset-0 bg-black/60 z-40", overlayClassName)}
-        />
-      )}
-
+      {/* Background Images */}
       {areImagesLoaded && (
         <AnimatePresence>
           <motion.img
@@ -142,9 +144,27 @@ export const ImagesSlider = ({
             animate="visible"
             exit={direction === "up" ? "upExit" : "downExit"}
             variants={slideVariants}
-            className="image h-full w-full absolute inset-0 object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            alt={`Slide ${currentIndex + 1}`}
           />
         </AnimatePresence>
+      )}
+
+      {/* Overlay */}
+      {areImagesLoaded && overlay && (
+        <div
+          className={cn("absolute inset-0 bg-black/60 z-40", overlayClassName)}
+        />
+      )}
+
+      {/* Children Content */}
+      {areImagesLoaded && children}
+      
+      {/* Debug info */}
+      {!areImagesLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-neutral-800 text-white">
+          Loading images... ({loadedImages.length}/{images.length})
+        </div>
       )}
     </div>
   );

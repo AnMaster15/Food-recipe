@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 
 export function CardStackDemo() {
   return (
-    <div className="h-[30rem] flex items-center justify-center w-full bg-gradient-to-b from-blue-50 to-blue-200 dark:from-gray-800 dark:to-gray-900">
+    <div className="h-[30rem] flex items-center justify-center w-full bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <CardStack items={CARDS} />
     </div>
   );
@@ -21,7 +21,7 @@ export const Highlight = ({
   return (
     <span
       className={cn(
-        "font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-700/[0.2] dark:text-emerald-500 px-1 py-0.5 rounded-md",
+        "font-bold bg-purple-500/20 text-purple-300 px-1 py-0.5 rounded-md",
         className
       )}
     >
@@ -33,31 +33,41 @@ export const Highlight = ({
 const CARDS = [
   {
     id: 0,
-    name: "Dr Rakesh Chadda",
-    designation: "Nutrition Expert",
+    name: "Dr. Sarah Chen",
+    designation: "Nutritionist & Food Scientist",
     content: (
       <p>
-        The recipes on FoodMy are exceptional, <Highlight>I&apos;m inspired</Highlight> by their creativity and nutritional balance.
+        What sets FoodMy apart is their commitment to <Highlight>balanced nutrition</Highlight> without compromising on taste. The detailed nutritional information for each recipe is a game-changer for health-conscious cooks.
       </p>
     ),
   },
   {
     id: 1,
-    name: "Ayush Sharma",
-    designation: "Fitness Coach",
+    name: "Chef Marcus Rodriguez",
+    designation: "Professional Chef & Food Blogger",
     content: (
       <p>
-        FoodMy has helped me discover <Highlight>delicious healthy meals</Highlight> that I recommend to all my clients.
+        I&apos;ve discovered so many <Highlight>unique fusion recipes</Highlight> on FoodMy. The platform&apos;s diverse collection and detailed instructions make complex dishes accessible to home cooks of all skill levels.
       </p>
     ),
   },
   {
     id: 2,
-    name: "Rohan Orhi",
-    designation: "Culinary Artist",
+    name: "Lisa Thompson",
+    designation: "Home Cook & Community Leader",
     content: (
       <p>
-        FoodMy&apos;s approach to <Highlight>innovative cooking techniques</Highlight> has revolutionized how I prepare meals.
+        The <Highlight>community features</Highlight> on FoodMy are fantastic! I&apos;ve connected with fellow food enthusiasts, shared recipes, and learned so much from others. It&apos;s more than just a recipe site - it&apos;s a culinary social network.
+      </p>
+    ),
+  },
+  {
+    id: 3,
+    name: "James Parker",
+    designation: "Food Photography Expert",
+    content: (
+      <p>
+        The <Highlight>visual presentation</Highlight> of recipes on FoodMy is outstanding. The step-by-step photos and video guides make it easy to achieve professional-looking results at home.
       </p>
     ),
   },

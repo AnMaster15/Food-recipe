@@ -20,6 +20,8 @@ const FoodRecipes = () => {
           strMealThumb: meal.strMealThumb,
           strInstructions: meal.strInstructions,
         }));
+        console.log('Fetched recipes:', recipeData);
+        console.log('First recipe structure:', recipeData[0]);
         setRecipes(recipeData);
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -30,19 +32,41 @@ const FoodRecipes = () => {
   }, []);
 
   const handleViewRecipe = (id: string) => {
-    router.push(`/recipes/${id}`);
+    console.log('Navigating to recipe:', id);
+    try {
+      router.push(`/recipes/${id}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
   };
 
   return (
-    <div className="h-[40rem] w-full dark:bg-black dark:bg-dot-white/[0.2] relative flex flex-col items-center justify-center overflow-hidden">
-      <div className="flex justify-center w-full overflow-hidden px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-6xl">
-          <InfiniteMovingCards
-            items={recipes}
-            direction="right"
-            speed="slow"
-            onClickItem={handleViewRecipe}
-          />
+    <div className="relative w-full py-16">
+      {/* Enhanced background with gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/80 via-neutral-800/60 to-neutral-900/80 rounded-3xl border border-neutral-700/30 shadow-2xl"></div>
+      
+      {/* Content container */}
+      <div className="relative z-10 h-[40rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-3xl">
+        {/* Header section */}
+        <div className="text-center mb-8 px-6">
+          <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
+            Discover Amazing Recipes
+          </h2>
+          <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
+            Explore our curated collection of delicious recipes from around the world
+          </p>
+        </div>
+        
+        {/* Cards container */}
+        <div className="flex justify-center w-full overflow-hidden px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-6xl">
+            <InfiniteMovingCards
+              items={recipes}
+              direction="right"
+              speed="slow"
+              onClickItem={handleViewRecipe}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -51,54 +75,3 @@ const FoodRecipes = () => {
 
 export default FoodRecipes;
 
-
-// <div className=" pt-3 lg:p-5 m-5 lg:m-14 rounded-lg flex flex-col lg:flex-row justify-center border-tertiary shadow-lg bg-white">
-//         <div className="flex-1 ">
-//           <div className=" flex justify-center    ">
-//             <img
-//               className='rounded-xl'
-//               src={image}
-//               alt=""
-//             />
-//           </div>
-
-//           <div className="m-3">
-//             <p className="text-xl text-secondary font-frank">Ingredients <span className='text-sm font-extralight'>(per one serving)</span></p>
-//             <hr />
-//             <div>
-//             <div>
-//        {data.map((item,number)=>{
-//          return(
-
-//            <ul key={number} className="flex justify-between font-rubik text-secondary m-2">
-//              <p>{item.name.toUpperCase()}</p> <span className='font-bold'>{item.amount.metric.value}{item.amount.metric.unit}</span>
-//            </ul>
-//          )
-//        })}
-//      </div>
-//      {/* https://api.spoonacular.com/recipes/4632/summary */}
-//             </div>
-//           </div>
-// </div>
-
-//           <div className='flex-1'>
-//           <div className="m-3">
-//             <p className="text-xl text-secondary font-frank">Steps</p>
-//             <hr />
-//             <div>
-//             <div>
-//        {stepdata.steps.map((item, index)=>{
-//          return(
-//            <ul key={index} className="flex   font-rubik text-secondary m-2">
-//             <span className='m-1'>{item.number}</span> <p className='m-1'>{item.step}</p> 
-//            </ul>
-//          )
-//        })}
-//      </div>
-  
-//             </div>
-//           </div>
-//           </div>
-//         </div>
-       
-//          </>

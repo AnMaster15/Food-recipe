@@ -1,12 +1,17 @@
+// app/recipes/[category]/page.tsx
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { BackgroundGradient } from "../../../components/ui/ackground-gradient";
-// import { IconAppWindow } from "@tabler/icons-react";
-import Image from "next/image";
+import Image, { ImageLoaderProps } from 'next/image';
+
+// Define the loader here
+const imageLoader = ({ src }: ImageLoaderProps) => {
+    return src;
+};
 
 const RecipesByCategory = () => {
+  // ... (all your existing state and fetching logic remains the same) ...
   const { category } = useParams();
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -61,33 +66,66 @@ const RecipesByCategory = () => {
     getRecipes();
   }, [category, router]);
 
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500 mb-4"></div>
+        <span className="text-white text-lg">Loading...</span>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-black py-12 pt-10">
-       <button onClick={() => router.push('/')} className="relative group left-5">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg opacity-75 transition duration-200 group-hover:opacity-100" />
-          <div className="relative px-8 py-2 bg-slate-700 rounded-lg text-white transition duration-200 group-hover:bg-transparent">
-            Back to Home
-          </div>
-        </button>
-    <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">{category} Recipes</h1>  
-      {/* <h1 className="text-4xl font-bold mb-6 text-gray-800">{category} Recipes</h1> */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {recipes.length > 0 ? (
-          recipes.map(recipe => (
-            <BackgroundGradient key={recipe.idMeal} className="rounded-[22px] p-4 sm:p-10 bg-slate-900">
-              <div onClick={() => router.push(`/recipes/${recipe.idMeal}`)} className="cursor-pointer">
-                <h2 className="text-xl font-bold mb-2 text-white-600">{recipe.strMeal}</h2>
-                <img src={recipe.strMealThumb} alt={recipe.strMeal} className="w-full h-48 object-cover mb-4 rounded-lg" />
-              </div>
-            </BackgroundGradient>
-          ))
-        ) : (
-          <p>No recipes found.</p>
-        )}
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white py-16">
+      <div className="container-modern">
+        <div className="flex items-center justify-between mb-8">
+          <button onClick={() => router.push('/')} className="btn btn-secondary">
+            ← Back to Home
+          </button>
+        </div>
+
+        <div className="section-header">
+          <h1 className="section-title gradient-text mb-3">{category} Recipes</h1>
+          <p className="section-subtitle">Curated dishes to match your taste</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {recipes.length > 0 ? (
+            recipes
+              .filter(recipe => recipe.strMealThumb) // Only include recipes with a valid image
+              .map((recipe) => (
+                <div
+                  key={recipe.idMeal}
+                  className="relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover-lift card-glow"
+                >
+                  <div className="relative h-48 cursor-pointer" onClick={() => router.push(`/recipes/${recipe.idMeal}`)}>
+                    <Image
+                      loader={imageLoader}
+                      src={recipe.strMealThumb || '/images/unknown.jpeg'}
+                      alt={recipe.strMeal}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                  </div>
+                  <div className="p-5">
+                    <h2 className="text-lg font-semibold mb-3 line-clamp-2">{recipe.strMeal}</h2>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => router.push(`/recipes/${recipe.idMeal}`)}
+                        className="flex-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:opacity-95 transition"
+                      >
+                        View Recipe
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+          ) : (
+            <p className="text-center text-gray-300">No recipes found.</p>
+          )}
+        </div>
       </div>
     </div>
   );

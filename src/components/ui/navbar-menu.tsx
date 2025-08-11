@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const transition = {
   type: 'spring',
@@ -28,7 +28,7 @@ export const MenuItem = ({
     <div onMouseEnter={() => setActive(item)} className="relative ">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
+        className="cursor-pointer text-white hover:opacity-[0.9] font-medium"
       >
         {item}
       </motion.p>
@@ -90,7 +90,7 @@ export const ProductItem = ({
 }) => {
   return (
     <Link href={href} className="flex space-x-2">
-      <Image
+      <OptimizedImage
         src={src}
         width={140}
         height={70}

@@ -89,38 +89,64 @@ Please respond accurately and concisely to questions related to these topics. If
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black-100 to-black-300 p-4">
-            <div className="bg-white shadow-2xl rounded-lg w-full max-w-3xl p-8 mx-auto">
-                <h2 className="text-3xl md:text-5xl font-bold text-center mb-6 text-indigo-600">
-                    Discover Delicious Recipes
-                </h2>
-                <form onSubmit={generateAnswer} className="space-y-4">
-                    <textarea
-                        required
-                        className="border border-gray-300 rounded w-full p-3 transition-all duration-300 focus:border-indigo-500 focus:shadow-lg text-gray-800"
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        placeholder="Ask anything..."
-                    ></textarea>
-                    <button
-                        type="submit"
-                        className={`w-full py-3 rounded-md bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition-all duration-300 ${generatingAnswer ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        disabled={generatingAnswer}
-                    >
-                        Generate Answer
-                    </button>
-                </form>
-                <div className="mt-6">
-                    <div className="bg-gray-50 p-4 rounded-lg shadow-inner">
-                        <ReactMarkdown className="text-gray-800">{answer}</ReactMarkdown>
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
+            <div className="container-modern pt-20">
+                <div className="max-w-4xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                            AI Recipe Assistant
+                        </h1>
+                        <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto">
+                            Ask me anything about recipes, cooking tips, and nutritional information
+                        </p>
                     </div>
-                </div>
-                <div className="mt-6 text-center">
-                    <Link href="/">
-                        <button className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition-all duration-300">
-                            Go Back Home
-                        </button>
-                    </Link>
+                    
+                    <div className="bg-neutral-900/50 backdrop-blur-lg rounded-3xl p-8 border border-neutral-800 shadow-2xl">
+                        <form onSubmit={generateAnswer} className="space-y-6">
+                            <div>
+                                <label className="block text-neutral-200 text-sm font-medium mb-2">
+                                    Your Question
+                                </label>
+                                <textarea
+                                    required
+                                    className="w-full p-4 bg-neutral-800/50 border border-neutral-700 rounded-2xl text-neutral-100 placeholder-neutral-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300 resize-none"
+                                    rows={4}
+                                    value={question}
+                                    onChange={(e) => setQuestion(e.target.value)}
+                                    placeholder="Ask anything about recipes, cooking, or nutrition..."
+                                ></textarea>
+                            </div>
+                            
+                            <button
+                                type="submit"
+                                className={`w-full py-4 rounded-2xl font-semibold transition-all duration-300 ${
+                                    generatingAnswer 
+                                        ? 'opacity-50 cursor-not-allowed bg-neutral-600' 
+                                        : 'btn btn-primary hover:scale-105'
+                                }`}
+                                disabled={generatingAnswer}
+                            >
+                                {generatingAnswer ? 'Generating Answer...' : 'Get AI Answer'}
+                            </button>
+                        </form>
+                        
+                        {answer && (
+                            <div className="mt-8 p-6 bg-neutral-800/50 rounded-2xl border border-neutral-700">
+                                <h3 className="text-xl font-semibold text-neutral-200 mb-4">AI Response:</h3>
+                                <div className="prose prose-invert max-w-none">
+                                    <ReactMarkdown className="text-neutral-300 leading-relaxed">{answer}</ReactMarkdown>
+                                </div>
+                            </div>
+                        )}
+                        
+                        <div className="mt-8 text-center">
+                            <Link href="/">
+                                <button className="btn btn-secondary hover:scale-105 transition-transform duration-200">
+                                    ← Back to Home
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

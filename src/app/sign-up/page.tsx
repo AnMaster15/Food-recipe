@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from 'next/navigation';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import Link from 'next/link';
 import { AuroraBackground } from "../../components/ui/aurora-background";
@@ -29,9 +30,28 @@ const SignUp = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/');
-    } catch (error) {
-      setError('Error signing up');
+      setError(null);
+      // Show success message before redirecting
+      setError('Account created successfully! Redirecting...');
+      setTimeout(() => router.push('/'), 2000);
+    } catch (err) {
+      const error = err as FirebaseError;
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setError('This email is already registered. Please sign in or use a different email.');
+          break;
+        case 'auth/invalid-email':
+          setError('Invalid email format. Please enter a valid email address.');
+          break;
+        case 'auth/weak-password':
+          setError('Password is too weak. Please use at least 6 characters.');
+          break;
+        case 'auth/network-request-failed':
+          setError('Network error. Please check your internet connection.');
+          break;
+        default:
+          setError('An error occurred during sign up. Please try again.');
+      }
       console.error('Error signing up:', error);
     }
   };
@@ -57,7 +77,18 @@ const SignUp = () => {
     
       <form onSubmit={handleSignUp} className="bg-black p-10 rounded-3xl shadow-md w-full max-w-md">
          <TypewriterEffectSmooth words={words} />
-        {error && <p className="text-red-500 mb-4 ">{error}</p>}
+        {error && (
+          <div className="mb-4 flex items-center justify-center animate-fade-in">
+            <span className="mr-2 text-red-500">&#9888;</span>
+            <span className={`px-4 py-2 rounded-lg shadow-sm text-center border transition-all duration-300 ${
+              error.includes('success') 
+              ? 'bg-green-100 text-green-700 border-green-300' 
+              : 'bg-red-100 text-red-700 border-red-300'
+            }`}>
+              {error}
+            </span>
+          </div>
+        )}
         <input
           type="email"
           value={email}

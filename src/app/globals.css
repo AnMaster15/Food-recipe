@@ -3,17 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 17, 24, 39;
+  --background-end-rgb: 0, 0, 0;
 }
 
 body {
@@ -25,10 +17,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
 .navbar-container {
   position: relative;
-  padding: 2px; /* Adjust the width of the border here */
-  border-radius: 26px; /* Adjust the border-radius */
+  padding: 2px;
+  border-radius: 26px;
 }
 
 .navbar-gradient-border {
@@ -41,19 +34,131 @@ body {
   border-radius: inherit;
   z-index: 1;
   pointer-events: none;
+  animation: gradient-shift 3s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background: linear-gradient(90deg, rgba(238,0,153,1) 0%, rgba(221,0,238,1) 35%, rgba(0,140,255,1) 100%);
+  }
+  100% {
+    background: linear-gradient(90deg, rgba(0,140,255,1) 0%, rgba(238,0,153,1) 35%, rgba(221,0,238,1) 100%);
+  }
 }
 
 .navbar-content {
   position: relative;
-  background: white; /* Adjust based on your navbar background */
+  background: rgba(17, 24, 39, 0.9);
   border-radius: inherit;
   z-index: 2;
+  backdrop-filter: blur(20px);
 }
 
+/* Button styles */
+.btn {
+  @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-200 border-2;
+}
 
+.btn-primary {
+  @apply bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white border-transparent shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary {
+  @apply bg-transparent text-neutral-300 border-neutral-600 hover:bg-neutral-800/50 hover:border-neutral-500 hover:text-neutral-100;
+}
+
+/* Container styling */
+.container-modern {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-modern {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-modern {
+    padding: 0 3rem;
+  }
+}
+
+/* Section styling */
+.section {
+  margin-bottom: 6rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.section-subtitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+  color: #d1d5db;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, rgba(238,0,153,1) 0%, rgba(221,0,238,1) 35%, rgba(0,140,255,1) 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, rgba(238,0,153,0.8) 0%, rgba(221,0,238,0.8) 35%, rgba(0,140,255,0.8) 100%);
+}
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, rgba(238,0,153,1) 0%, rgba(221,0,238,1) 35%, rgba(0,140,255,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-border {
+    background: linear-gradient(90deg, rgba(238,0,153,1) 0%, rgba(221,0,238,1) 35%, rgba(0,140,255,1) 100%);
+  }
+  
+  .card-glow {
+    box-shadow: 0 0 20px rgba(238,0,153,0.3), 0 0 40px rgba(221,0,238,0.2), 0 0 60px rgba(0,140,255,0.1);
+  }
+  
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   }
 }

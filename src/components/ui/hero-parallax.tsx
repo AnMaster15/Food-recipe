@@ -7,7 +7,7 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import Image from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import Link from "next/link";
 
 export const HeroParallax = ({
@@ -71,30 +71,39 @@ export const HeroParallax = ({
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
+            // ✅ FIX: Added a check to ensure the thumbnail exists
+            product.thumbnail && (
+              <ProductCard
+                product={product}
+                translate={translateX}
+                key={product.title}
+              />
+            )
           ))}
         </motion.div>
         <motion.div className="flex flex-row  mb-20 space-x-20 ">
           {secondRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateXReverse}
-              key={product.title}
-            />
+            // ✅ FIX: Added a check to ensure the thumbnail exists
+            product.thumbnail && (
+              <ProductCard
+                product={product}
+                translate={translateXReverse}
+                key={product.title}
+              />
+            )
           ))}
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
-          ))}
+          {firstRow.map((product) =>
+            // ✅ FIX: Add this check to render the card only if a thumbnail exists
+            product.thumbnail && (
+              <ProductCard
+                product={product}
+                translate={translateX}
+                key={product.title}
+              />
+            )
+          )}
         </motion.div>
       </motion.div>
     </div>
@@ -108,7 +117,7 @@ export const Header = () => {
         ABOUT US
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-      Welcome to FoodMy, your ultimate destination for discovering delicious recipes and understanding the nutrients in your meals. Our mission is to make healthy eating easy and enjoyable by providing you with a wide range of recipes, from quick and simple dishes to gourmet meals, all with detailed nutritional information.
+        Welcome to FoodMy, your ultimate destination for discovering delicious recipes and understanding the nutrients in your meals. Our mission is to make healthy eating easy and enjoyable by providing you with a wide range of recipes, from quick and simple dishes to gourmet meals, all with detailed nutritional information.
       </p>
     </div>
   );
@@ -140,10 +149,10 @@ export const ProductCard = ({
         href={product.link}
         className="block group-hover/product:shadow-2xl "
       >
-        <Image
+        <OptimizedImage
           src={product.thumbnail}
-          height="600"
-          width="600"
+          height={600}
+          width={600}
           className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
         />

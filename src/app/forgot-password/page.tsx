@@ -18,16 +18,28 @@ const ForgotPassword = () => {
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setError(null);
+    setMessage(null);
     try {
       await sendPasswordResetEmail(auth, email);
-      setMessage('Password reset email sent.');
-      setTimeout(() => {
-        router.push('/sign-in');
-      }, 3000);
-    } catch (error) {
-      setError('Error sending password reset email');
-      console.error('Error sending password reset email:', error);
+      setMessage('Password reset email sent! Check your inbox.');
+      setTimeout(() => router.push('/sign-in'), 2000);
+    } catch (err) {
+      const error = err as import('firebase/app').FirebaseError;
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setError('Invalid email format.');
+          break;
+        case 'auth/user-not-found':
+          setError('No user found with this email.');
+          break;
+        case 'auth/network-request-failed':
+          setError('Network error. Please check your connection.');
+          break;
+        default:
+          setError('Error sending password reset email. Please try again later.');
+          console.error('Error sending password reset email:', error);
+      }
     }
   };
   const words = [
@@ -50,9 +62,23 @@ const ForgotPassword = () => {
     >
     <div className="min-h-screen flex items-center justify-center bg-black-100">
       <form onSubmit={handleForgotPassword} className="bg-black p-10 rounded-3xl shadow-md w-full">
-      <TypewriterEffectSmooth words={words} />
-        {message && <p className="text-green-500 mb-4">{message}</p>}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <TypewriterEffectSmooth words={words} />
+        {error && (
+          <div className="mb-4 flex items-center justify-center animate-fade-in">
+            <span className="mr-2 text-red-500">&#9888;</span>
+            <span className="bg-red-100 text-red-700 px-4 py-2 rounded-lg shadow-sm text-center border border-red-300 transition-all duration-300">
+              {error}
+            </span>
+          </div>
+        )}
+        {message && (
+          <div className="mb-4 flex items-center justify-center animate-fade-in">
+            <span className="mr-2 text-green-500">&#10003;</span>
+            <span className="bg-green-100 text-green-700 px-4 py-2 rounded-lg shadow-sm text-center border border-green-300 transition-all duration-300">
+              {message}
+            </span>
+          </div>
+        )}
         <input
           type="email"
           value={email}

@@ -1,229 +1,359 @@
 'use client';
 
-import Image from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "../../components/ui/3d-card";
 import Link from "next/link";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 const categories = [
   {
     title: "Vegetarian",
-    imageUrl: "/images/vegetration.jpeg", // Ensure the path is correct
+    description: "Fresh plant-based recipes",
+    imageUrl: "/images/vegetration.jpeg",
     link: "/category/Vegetarian",
+    color: "from-emerald-500/20 to-emerald-600/40",
+    bgColor: "bg-emerald-500/10"
   },
   {
     title: "Non-Vegetarian",
-    imageUrl: "/images/nonveg.jpg", // Ensure the path is correct
+    description: "Protein-rich meat dishes",
+    imageUrl: "/images/nonveg.jpg",
     link: "/category/Non-Vegetarian",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Breakfast",
-    imageUrl: "/images/breakfast.jpeg", // Ensure the path is correct
+    description: "Start your day right",
+    imageUrl: "/images/breakfast.jpeg",
     link: "/category/Breakfast",
+    color: "from-yellow-500/20 to-yellow-600/40",
+    bgColor: "bg-yellow-500/10"
   },
   {
     title: "Dessert",
-    imageUrl: "/images/dessert.jpeg", // Ensure the path is correct
+    description: "Sweet treats & delights",
+    imageUrl: "/images/dessert.jpeg",
     link: "/category/Dessert",
+    color: "from-pink-500/20 to-pink-600/40",
+    bgColor: "bg-pink-500/10"
   },
   {
     title: "Side",
-    imageUrl: "/images/side.jpeg", // Ensure the path is correct
+    description: "Perfect accompaniments",
+    imageUrl: "/images/side.jpeg",
     link: "/category/Side",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Starter",
-    imageUrl: "/images/starter.jpeg", // Ensure the path is correct
+    description: "Begin your meal",
+    imageUrl: "/images/starter.jpeg",
     link: "/category/Starter",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Indian",
-    imageUrl: "/images/indian.jpeg", // Ensure the path is correct
+    description: "Spices and traditional flavors",
+    imageUrl: "/images/indian.jpeg",
     link: "/category/Indian",
+    color: "from-orange-500/20 to-orange-600/40",
+    bgColor: "bg-orange-500/10"
   },
   {
     title: "French",
-    imageUrl: "/images/french.jpeg", // Ensure the path is correct
+    description: "Elegant culinary artistry",
+    imageUrl: "/images/french.jpeg",
     link: "/category/French",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Chinese",
-    imageUrl: "/images/chinese.jpeg", // Ensure the path is correct
+    description: "Ancient cooking wisdom",
+    imageUrl: "/images/chinese.jpeg",
     link: "/category/Chinese",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "American",
-    imageUrl: "/images/american.jpeg", // Ensure the path is correct
+    description: "Classic comfort food",
+    imageUrl: "/images/american.jpeg",
     link: "/category/American",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "British",
-    imageUrl: "/images/british.jpeg", // Ensure the path is correct
+    description: "Traditional British fare",
+    imageUrl: "/images/british.jpeg",
     link: "/category/British",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Canadian",
-    imageUrl: "/images/canandian.jpeg", // Ensure the path is correct
+    description: "Northern comfort cuisine",
+    imageUrl: "/images/canandian.jpeg",
     link: "/category/Canadian",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Croatian",
-    imageUrl: "/images/crotian.jpeg", // Ensure the path is correct
+    description: "Adriatic coastal flavors",
+    imageUrl: "/images/crotian.jpeg",
     link: "/category/Croatian",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Dutch",
-    imageUrl: "/images/dutch.jpeg", // Ensure the path is correct
+    description: "Netherlands heritage",
+    imageUrl: "/images/dutch.jpeg",
     link: "/category/Dutch",
+    color: "from-orange-500/20 to-orange-600/40",
+    bgColor: "bg-orange-500/10"
   },
   {
     title: "Egyptian",
-    imageUrl: "/images/egyptian.jpeg", // Ensure the path is correct
+    description: "Ancient Nile cuisine",
+    imageUrl: "/images/egyptian.jpeg",
     link: "/category/Egyptian",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Filipino",
-    imageUrl: "/images/flipino.jpeg", // Ensure the path is correct
+    description: "Island fusion flavors",
+    imageUrl: "/images/flipino.jpeg",
     link: "/category/Filipino",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Greek",
-    imageUrl: "/images/greek.jpeg", // Ensure the path is correct
+    description: "Mediterranean classics",
+    imageUrl: "/images/greek.jpeg",
     link: "/category/Greek",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Irish",
-    imageUrl: "/images/irish.jpeg", // Ensure the path is correct
+    description: "Emerald Isle traditions",
+    imageUrl: "/images/irish.jpeg",
     link: "/category/Irish",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Italian",
-    imageUrl: "/images/italian.jpeg", // Ensure the path is correct
+    description: "La dolce vita cuisine",
+    imageUrl: "/images/italian.jpeg",
     link: "/category/Italian",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Jamaican",
-    imageUrl: "/images/jamican.jpeg", // Ensure the path is correct
+    description: "Caribbean spice & heat",
+    imageUrl: "/images/jamican.jpeg",
     link: "/category/Jamaican",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Japanese",
-    imageUrl: "/images/japanese.jpeg", // Ensure the path is correct
+    description: "Zen culinary philosophy",
+    imageUrl: "/images/japanese.jpeg",
     link: "/category/Japanese",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Kenyan",
-    imageUrl: "/images/kenyan.jpeg", // Ensure the path is correct
+    description: "East African heritage",
+    imageUrl: "/images/kenyan.jpeg",
     link: "/category/Kenyan",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Malaysian",
-    imageUrl: "/images/malaysian.jpeg", // Ensure the path is correct
+    description: "Southeast Asian fusion",
+    imageUrl: "/images/malaysian.jpeg",
     link: "/category/Malaysian",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Mexican",
-    imageUrl: "/images/mexican.jpeg", // Ensure the path is correct
+    description: "Vibrant Latin flavors",
+    imageUrl: "/images/mexican.jpeg",
     link: "/category/Mexican",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Moroccan",
-    imageUrl: "/images/moroccan.jpeg", // Ensure the path is correct
+    description: "North African spices",
+    imageUrl: "/images/moroccan.jpeg",
     link: "/category/Moroccan",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Polish",
-    imageUrl: "/images/polish.jpeg", // Ensure the path is correct
+    description: "Eastern European comfort",
+    imageUrl: "/images/polish.jpeg",
     link: "/category/Polish",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Portuguese",
-    imageUrl: "/images/portuguese.jpeg", // Ensure the path is correct
+    description: "Atlantic coast cuisine",
+    imageUrl: "/images/portuguese.jpeg",
     link: "/category/Portuguese",
+    color: "from-green-500/20 to-green-600/40",
+    bgColor: "bg-green-500/10"
   },
   {
     title: "Russian",
-    imageUrl: "/images/russian.jpeg", // Ensure the path is correct
+    description: "Slavic culinary traditions",
+    imageUrl: "/images/russian.jpeg",
     link: "/category/Russian",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Spanish",
-    imageUrl: "/images/spanish.jpeg", // Ensure the path is correct
+    description: "Iberian peninsula flavors",
+    imageUrl: "/images/spanish.jpeg",
     link: "/category/Spanish",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Thai",
-    imageUrl: "/images/thai.jpeg", // Ensure the path is correct
+    description: "Land of smiles cuisine",
+    imageUrl: "/images/thai.jpeg",
     link: "/category/Thai",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Turkish",
-    imageUrl: "/images/turkish.jpeg", // Ensure the path is correct
+    description: "Ottoman empire legacy",
+    imageUrl: "/images/turkish.jpeg",
     link: "/category/Turkish",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
     title: "Ukrainian",
-    imageUrl: "/images/ukrainian.jpeg", // Ensure the path is correct
+    description: "Eastern European heritage",
+    imageUrl: "/images/ukrainian.jpeg",
     link: "/category/Ukrainian",
+    color: "from-blue-500/20 to-blue-600/40",
+    bgColor: "bg-blue-500/10"
   },
   {
     title: "Vietnamese",
-    imageUrl: "/images/vietnamese.jpeg", // Ensure the path is correct
+    description: "Fresh & fragrant dishes",
+    imageUrl: "/images/vietnamese.jpeg",
     link: "/category/Vietnamese",
+    color: "from-red-500/20 to-red-600/40",
+    bgColor: "bg-red-500/10"
   },
   {
-    title: "miscellaneous",
-    imageUrl: "/images/unknown.jpeg", // Ensure the path is correct
+    title: "Miscellaneous",
+    description: "Unique & special recipes",
+    imageUrl: "/images/unknown.jpeg",
     link: "/category/Unknown",
+    color: "from-gray-500/20 to-gray-600/40",
+    bgColor: "bg-gray-500/10"
   },
 ];
 
 const Topics: React.FC = () => {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen bg-black py-12 pt-10">
-      <button onClick={() => router.push('/')} className="relative group left-5">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg opacity-75 transition duration-200 group-hover:opacity-100" />
-        <div className="relative px-8 py-2 bg-slate-700 rounded-lg text-white transition duration-200 group-hover:bg-transparent">
-          Back to Home
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black py-12 pt-10">
+      {/* Header Section */}
+      <div className="max-w-7xl mx-auto px-4 mb-12">
+        <button 
+          onClick={() => router.push('/')} 
+          className="btn btn-secondary mb-8 hover:scale-105 transition-transform duration-200"
+        >
+          ← Back to Home
+        </button>
+        
+        <div className="text-center">
+          <h1 className="text-4xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            All Categories
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto">
+            Explore our comprehensive collection of recipes from around the world
+          </p>
         </div>
-      </button>
-      <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">All Categories</h1>  
-      <div className="flex flex-wrap justify-center">
-        {categories.map((category, index) => (
-          <CardContainer key={index} className="inter-var m-4">
-            <CardBody className=" relative group/card hover:shadow-2xl hover:shadow-emerald-500/[0.1] bg-slate-700 border-white/[0.2] w-auto h-auto rounded-xl p-6 border">
-              <CardItem
-                translateZ="50"
-                className="text-xl font-bold text-white"
-              >
-                {category.title}
-              </CardItem>
-              <CardItem
-                translateZ="100"
-                className="w-full mt-4"
-              >
-                <Image
-                  src={category.imageUrl}
-                  height="1000"
-                  width="1000"
-                  className="h-60 w-60 object-cover rounded-xl group-hover/card:shadow-xl"
-                  alt={category.title}
-                />
-              </CardItem>
-              <div className="flex justify-between items-center mt-4">
-                <CardItem
-                  translateZ={20}
-                  as={Link}
-                  href={category.link}
-                  className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                >
-                  Explore →
+      </div>
+
+      {/* Categories Grid */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {categories.map((category, index) => (
+            <CardContainer key={index} className="inter-var">
+              <CardBody className="relative group/card bg-white/5 backdrop-blur-lg border border-white/10 w-full h-80 rounded-3xl p-6 transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] shadow-2xl">
+                
+                {/* Image Container with fixed dimensions */}
+                <CardItem translateZ="100" className="w-full mb-4">
+                  <div className="relative w-full h-48 rounded-2xl overflow-hidden">
+                    <OptimizedImage
+                      src={category.imageUrl}
+                      height={192}
+                      width={400}
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                      alt={category.title}
+                      priority={index < 8}
+                    />
+                    
+                    {/* Gradient overlay for text visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+                    
+                    {/* Category info overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h3 className="text-xl font-bold text-white mb-2">
+                        {category.title}
+                      </h3>
+                      <p className="text-sm text-gray-200">
+                        {category.description}
+                      </p>
+                    </div>
+                  </div>
                 </CardItem>
-              </div>
-            </CardBody>
-          </CardContainer>
-        ))}
+
+                {/* Action Button */}
+                <div className="flex justify-center">
+                  <CardItem
+                    translateZ={20}
+                    as={Link}
+                    href={category.link}
+                    className="btn btn-primary hover:scale-105 transition-transform duration-200"
+                  >
+                    Explore Recipes →
+                  </CardItem>
+                </div>
+              </CardBody>
+            </CardContainer>
+          ))}
+        </div>
       </div>
     </div>
   );
